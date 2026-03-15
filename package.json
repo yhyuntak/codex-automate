@@ -1,0 +1,21 @@
+{
+  "name": "codex-automate",
+  "version": "0.1.0",
+  "description": "Codex multi-agent harness CLI for global setup and reusable workflow defaults.",
+  "type": "module",
+  "bin": {
+    "codex-automate": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node ./src/cli.js"
+  },
+  "keywords": [
+    "codex",
+    "agent",
+    "harness",
+    "automation",
+    "cli"
+  ],
+  "author": "yhyuntak",
+  "license": "MIT"
+}
