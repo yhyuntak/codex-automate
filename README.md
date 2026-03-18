@@ -16,7 +16,7 @@ Codex CLI multi-agent harness scaffold.
 - projects do not require explicit initialization
 - project-local state can be created lazily during real work
 
-## Planned Commands
+## Commands
 
 - `codex-automate setup`
 - `codex-automate doctor`
@@ -24,4 +24,7 @@ Codex CLI multi-agent harness scaffold.
 
 ## Current State
 
-This repository is the initial scaffold only.
+`setup` currently installs `~/.codex/AGENTS.md`.
+
+- If an existing `~/.codex/AGENTS.md` is present, it is backed up to `~/.codex/backups/<timestamp>/AGENTS.md`
+- `config.toml` is intentionally not managed yet
