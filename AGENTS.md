@@ -15,6 +15,8 @@ It is not the installed global `~/.codex/AGENTS.md` file.
 - keep setup behavior explicit
 - do not silently expand the install surface
 - document user-facing behavior in `README.md`
+- treat version impact as a default review item before every commit
+- before committing, check whether the change needs a version bump and `CHANGELOG.md` update
 
 ## AGENTS.md Management Policy
 

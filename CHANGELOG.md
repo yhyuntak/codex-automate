@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- strengthened the internal repository `AGENTS.md` to require version-impact review before every commit
+- clarified that commits should check for a required version bump and `CHANGELOG.md` update
+
 ## 0.2.0
 
 - added `setup` support for installing global `~/.codex/AGENTS.md`
