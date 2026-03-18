@@ -22,9 +22,31 @@ Codex CLI multi-agent harness scaffold.
 - `codex-automate doctor`
 - `codex-automate upgrade`
 
-## Current State
+## Quick Start
+
+For now, use this project directly from GitHub.
+
+```bash
+git clone https://github.com/yhyuntak/codex-automate.git
+cd codex-automate
+node src/cli.js setup
+```
+
+This currently installs global Codex guidance into `~/.codex/AGENTS.md`.
+
+## Current Setup Behavior
 
 `setup` currently installs `~/.codex/AGENTS.md`.
 
 - If an existing `~/.codex/AGENTS.md` is present, it is backed up to `~/.codex/backups/<timestamp>/AGENTS.md`
 - `config.toml` is intentionally not managed yet
+
+## Publishing Status
+
+Official npm publishing is planned, but not active yet.
+
+When the CLI surface is more stable, this project will be installable without cloning the repository.
+
+## Versioning
+
+Versioning for this repository follows [VERSIONING.md](/home/yhyuntak/workspace/codex-automate/VERSIONING.md).
