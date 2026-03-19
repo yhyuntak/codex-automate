@@ -1,9 +1,5 @@
 # Workflow Rules
 
-## Branch Strategy
-
-- Use a `main only` workflow by default unless there is a clear reason to introduce more branches.
-
 ## Commit Message Rules
 
 Use commit messages in this format:

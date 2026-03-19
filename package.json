@@ -1,6 +1,6 @@
 {
   "name": "codex-automate",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Codex multi-agent harness CLI for global setup and reusable workflow defaults.",
   "type": "module",
   "bin": {

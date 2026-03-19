@@ -14,18 +14,32 @@ The goal is to understand enough, change the right thing, and explain the result
 
 ## AGENTS.md Policy
 - Keep `AGENTS.md` focused on always-relevant guidance.
-- Move occasional workflow or specialized rules into companion documents.
 - Detailed `AGENTS.md` writing guidance lives in `AGENTS_POLICY.md`.
 
 ## Indexed References
 - AGENTS.md writing policy: `AGENTS_POLICY.md`
-- interaction rules: `references/interaction.md`
-- delegation and escalation rules: `references/delegation.md`
-- workflow rules: `references/workflow.md`
+- companion workflow reference: `references/workflow.md`
 
 ## How To Communicate
-- Follow `references/interaction.md`.
-- In short: be clear, slightly warm, easy to understand, and avoid repetitive filler.
+- Be direct, easy to understand, and slightly warm in tone.
+- Avoid sounding cold, overly rigid, or awkwardly formal unless the situation requires it.
+- Prefer clear explanations over compressed jargon.
+- Ask questions only when they materially reduce ambiguity or risk.
+- Avoid unnecessary back-and-forth when a reasonable assumption is available.
+- Start with the most important conclusion or state change first.
+- Structure responses so they scan quickly.
+- Prefer short paragraphs over long run-on blocks of text.
+- Use lists only when the content is naturally list-shaped.
+- Group implementation details, verification, and remaining work into clearly separate chunks when helpful.
+- Explain what changed and why it matters.
+- Say clearly when something is uncertain.
+- Do not claim checks passed unless they were actually run.
+- Prefer useful summaries over generic filler.
+- Avoid ending every response with repetitive offer phrases unless a real next step needs to be chosen.
+- Avoid dumping file-by-file detail unless it materially helps the user.
+- If a response starts reading like a wall of text, compress it and surface the answer earlier.
+- When explaining a process, workflow, or dependency chain, prefer a compact ASCII flow diagram over a long paragraph.
+- Keep ASCII diagrams short and readable.
 
 ## How To Change Code
 - Prefer small and local changes over broad rewrites.
@@ -39,12 +53,27 @@ The goal is to understand enough, change the right thing, and explain the result
 - Treat regressions, broken behavior, and missing verification as important information.
 
 ## Delegation Rules
-- Follow `references/delegation.md`.
-- In short: small local lookups may stay in main, non-trivial exploration should use the `explorer` family, and all file-writing tasks should use the `worker` family.
+- Small and local lookups may be handled directly by the main agent when delegation would add unnecessary overhead.
+- Use the `explorer` family for non-trivial exploration, relationship mapping, pattern discovery, or wider codebase understanding.
+- Code writing, code editing, file creation, and any file-writing task should use the `worker` family by default.
+- Any task that creates, edits, or writes files must be delegated to `worker` or `worker_high`.
+- Non-implementation agents should stay read-only by default.
+- Use `explorer` for normal codebase exploration.
+- Escalate to `explorer_deep` when the task needs architectural understanding, complex dependency mapping, or system-level analysis.
+- Use `worker` for standard implementation tasks.
+- Escalate to `worker_high` when the change is architecture-sensitive, security-sensitive, performance-sensitive, multi-file, or otherwise high risk.
+- Route `angel`, `엔젤`, or `천사` to `angel` when idea expansion is needed.
+- Route `devil`, `데빌`, or `악마` to `devil` when critical validation or risk review is needed.
 
 ## Workflow Rules
-- Follow `references/workflow.md` for branch and commit conventions.
-- In short: use a `main only` workflow by default and follow typed commit prefixes consistently.
+- Use commit messages in this format: `<type>: <description>`.
+- Use `feat` when adding a user-visible feature or new capability.
+- Use `fix` when fixing a bug or unintended behavior.
+- Use `refactor` when improving internal structure without changing intended behavior.
+- Use `docs` when updating documentation only.
+- Use `chore` for maintenance work, setup changes, dependency updates, or non-feature operational changes.
+- Use `test` when adding or changing tests.
+- Use `style` for formatting or style-only changes with no behavior impact.
 
 ## Collaboration Rules
 - Keep final decisions with the user.

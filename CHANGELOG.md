@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+- moved always-relevant interaction, delegation, and commit message rules into deployed `AGENTS.md`
+- removed the global default branch strategy from deployed guidance
+- kept `workflow.md` as a lighter companion reference focused on commit conventions
+
 ## 0.3.1
 
 - replaced string-based `config.toml` managed block updates with TOML-based merge updates
