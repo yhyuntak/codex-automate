@@ -12,20 +12,20 @@ The goal is to understand enough, change the right thing, and explain the result
 - When a task is straightforward, execute directly.
 - When a task is unclear or broad, slow down and clarify the approach before making large changes.
 
-## How To Communicate
-- Be direct, easy to understand, and slightly warm in tone.
-- Avoid sounding cold, overly rigid, or awkwardly formal unless the situation requires it.
-- Explain what you changed and why it matters.
-- If something is uncertain, say that clearly.
-- Do not pretend a check passed if it was not actually run.
-- Prefer short, useful summaries over long generic explanations.
-- Do not end every response with repetitive offer phrases like "if you want, I can..." unless a real next-step choice is useful.
-
 ## AGENTS.md Policy
-- Treat `AGENTS.md` as an indexing and routing document whenever possible.
-- Keep detailed rules in focused companion documents instead of growing `AGENTS.md` into a large monolithic file.
-- When updating project instructions, prefer adding links or references to dedicated documents.
-- Keep only high-level guidance, navigation, and essential local overrides in `AGENTS.md`.
+- Keep `AGENTS.md` focused on always-relevant guidance.
+- Move occasional workflow or specialized rules into companion documents.
+- Detailed `AGENTS.md` writing guidance lives in `AGENTS_POLICY.md`.
+
+## Indexed References
+- AGENTS.md writing policy: `AGENTS_POLICY.md`
+- interaction rules: `references/interaction.md`
+- delegation and escalation rules: `references/delegation.md`
+- workflow rules: `references/workflow.md`
+
+## How To Communicate
+- Follow `references/interaction.md`.
+- In short: be clear, slightly warm, easy to understand, and avoid repetitive filler.
 
 ## How To Change Code
 - Prefer small and local changes over broad rewrites.
@@ -39,16 +39,12 @@ The goal is to understand enough, change the right thing, and explain the result
 - Treat regressions, broken behavior, and missing verification as important information.
 
 ## Delegation Rules
-- Small and local lookups may be handled directly by the main agent when delegation would add unnecessary overhead.
-- Use the `explorer` family for non-trivial exploration, relationship mapping, pattern discovery, or wider codebase understanding.
-- Use `explorer` for normal codebase exploration and `explorer_deep` for system-level or architecture-heavy exploration.
-- Code writing, code editing, file creation, and any other file-writing tasks should use the `worker` family by default.
-- Any task that creates, edits, or writes files must be delegated to `worker` or `worker_high`.
-- Non-implementation agents should stay read-only by default.
-- Use `worker` for standard implementation tasks.
-- Use `worker_high` when the implementation is architecture-sensitive, security-sensitive, performance-sensitive, or otherwise high risk.
-- Requests such as `angel`, `엔젤`, or `천사` should route to the `angel` agent when idea expansion is needed.
-- Requests such as `devil`, `데빌`, or `악마` should route to the `devil` agent when critical validation or risk review is needed.
+- Follow `references/delegation.md`.
+- In short: small local lookups may stay in main, non-trivial exploration should use the `explorer` family, and all file-writing tasks should use the `worker` family.
+
+## Workflow Rules
+- Follow `references/workflow.md` for branch and commit conventions.
+- In short: use a `main only` workflow by default and follow typed commit prefixes consistently.
 
 ## Collaboration Rules
 - Keep final decisions with the user.

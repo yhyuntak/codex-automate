@@ -8,7 +8,9 @@ const [, , command = "help"] = process.argv;
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const codexHome = path.join(os.homedir(), ".codex");
 const templateAgentsPath = path.join(projectRoot, "templates", "AGENTS.md");
+const templateAgentsPolicyPath = path.join(projectRoot, "templates", "AGENTS_POLICY.md");
 const templateAgentConfigsDir = path.join(projectRoot, "templates", "agents");
+const templateReferencesDir = path.join(projectRoot, "templates", "references");
 const managedConfigStart = "# codex-automate managed block start";
 const managedConfigEnd = "# codex-automate managed block end";
 
@@ -43,10 +45,42 @@ function installAgentsFile() {
   return { targetPath, backupPath };
 }
 
+function installAgentsPolicyFile() {
+  const targetPath = path.join(codexHome, "AGENTS_POLICY.md");
+
+  ensureDir(codexHome);
+
+  let backupPath = null;
+  if (fs.existsSync(targetPath)) {
+    backupPath = backupFile(targetPath);
+  }
+
+  fs.copyFileSync(templateAgentsPolicyPath, targetPath);
+
+  return { targetPath, backupPath };
+}
+
 function installAgentConfig(name) {
   const sourcePath = path.join(templateAgentConfigsDir, `${name}.toml`);
   const targetDir = path.join(codexHome, "agents");
   const targetPath = path.join(targetDir, `${name}.toml`);
+
+  ensureDir(targetDir);
+
+  let backupPath = null;
+  if (fs.existsSync(targetPath)) {
+    backupPath = backupFile(targetPath);
+  }
+
+  fs.copyFileSync(sourcePath, targetPath);
+
+  return { targetPath, backupPath };
+}
+
+function installReferenceFile(name) {
+  const sourcePath = path.join(templateReferencesDir, name);
+  const targetDir = path.join(codexHome, "references");
+  const targetPath = path.join(targetDir, name);
 
   ensureDir(targetDir);
 
@@ -125,6 +159,10 @@ function updateConfigFile() {
 
 function runSetup() {
   const { targetPath, backupPath } = installAgentsFile();
+  const agentsPolicy = installAgentsPolicyFile();
+  const interactionRef = installReferenceFile("interaction.md");
+  const delegationRef = installReferenceFile("delegation.md");
+  const workflowRef = installReferenceFile("workflow.md");
   const explorerConfig = installAgentConfig("explorer");
   const explorerDeepConfig = installAgentConfig("explorer_deep");
   const workerConfig = installAgentConfig("worker");
@@ -136,6 +174,10 @@ function runSetup() {
     "Installed global Codex setup.",
     "",
     `- Installed: ${targetPath}`,
+    `- Installed: ${agentsPolicy.targetPath}`,
+    `- Installed: ${interactionRef.targetPath}`,
+    `- Installed: ${delegationRef.targetPath}`,
+    `- Installed: ${workflowRef.targetPath}`,
     `- Installed: ${explorerConfig.targetPath}`,
     `- Installed: ${explorerDeepConfig.targetPath}`,
     `- Installed: ${workerConfig.targetPath}`,
@@ -150,6 +192,22 @@ function runSetup() {
     lines.push("- Existing AGENTS.md was backed up and replaced.");
   } else {
     lines.push("- No previous AGENTS.md was found.");
+  }
+
+  if (agentsPolicy.backupPath) {
+    lines.push(`- Backup: ${agentsPolicy.backupPath}`);
+    lines.push("- Existing AGENTS_POLICY.md was backed up and replaced.");
+  }
+
+  for (const [label, result] of [
+    ["interaction reference", interactionRef],
+    ["delegation reference", delegationRef],
+    ["workflow reference", workflowRef]
+  ]) {
+    if (result.backupPath) {
+      lines.push(`- Backup: ${result.backupPath}`);
+      lines.push(`- Existing ${label} was backed up and replaced.`);
+    }
   }
 
   if (explorerConfig.backupPath) {

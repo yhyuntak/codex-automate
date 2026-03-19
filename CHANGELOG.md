@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+- split deployed guidance into `AGENTS.md`, `AGENTS_POLICY.md`, and `references/` documents
+- updated setup to install companion reference documents into `~/.codex/references/`
+- changed deployed `AGENTS.md` into a lighter routing document that indexes companion files
+
 ## 0.2.1
 
 - strengthened the internal repository `AGENTS.md` to require version-impact review before every commit
