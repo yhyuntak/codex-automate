@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.9.0
+
+- added a bundled `docs` Codex skill template for document CRUD and index maintenance
+- updated `setup` to install the docs skill into `~/.agents/skills/docs/`
+- documented a concrete `wrap -> doc_sync_checker` call template for documentation review
+
+## 0.8.0
+
+- added a `doc_sync_checker` custom agent template for documentation sync review
+- updated `wrap` to use the dedicated documentation sync checker instead of a generic fallback flow
+- added always-on `docs/**/*.md` metadata rules to the installed global `AGENTS.md`
+
+## 0.7.0
+
+- added a bundled `wrap` Codex skill template
+- updated `setup` to install the wrap skill into `~/.agents/skills/wrap/`
+- carried forward session-close behavior for plan finalization, doc sync review, and commit confirmation
+
+## 0.6.0
+
+- added a bundled `implement` Codex skill template
+- updated `setup` to install the implement skill into `~/.agents/skills/implement/`
+- aligned implement workflow wording with the Codex worker and worker_high agent pair
+
+## 0.5.0
+
+- added a bundled `save-para` Codex skill template with schema guidance
+- updated `setup` to install the save-para skill into `~/.agents/skills/save-para/`
+- restored the expected PARA README/index structure in `mynotes` for save-para compatibility
+
+## 0.4.0
+
+- added a bundled `planning` Codex skill template with supporting reference files
+- updated `setup` to install the planning skill into `~/.agents/skills/planning/`
+- documented the expanded setup surface for global guidance plus bundled skills
+
 ## 0.3.2
 
 - moved always-relevant interaction, delegation, and commit message rules into deployed `AGENTS.md`
