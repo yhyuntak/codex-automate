@@ -36,10 +36,19 @@ This currently installs global Codex guidance into `~/.codex/AGENTS.md`.
 
 ## Current Setup Behavior
 
-`setup` currently installs `~/.codex/AGENTS.md`.
+`setup` currently installs and updates:
 
-- If an existing `~/.codex/AGENTS.md` is present, it is backed up to `~/.codex/backups/<timestamp>/AGENTS.md`
-- `config.toml` is intentionally not managed yet
+- `~/.codex/AGENTS.md`
+- `~/.codex/AGENTS_POLICY.md`
+- `~/.codex/references/*.md`
+- `~/.codex/agents/*.toml`
+- `~/.codex/config.toml`
+
+Behavior:
+
+- Existing installed files are backed up into `~/.codex/backups/<timestamp>/`
+- `config.toml` is merged through TOML parsing rather than replaced wholesale
+- Custom agent `config_file` paths are written as resolved absolute paths
 
 ## Publishing Status
 

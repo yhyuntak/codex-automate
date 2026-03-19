@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import TOML from "@iarna/toml";
 
 const [, , command = "help"] = process.argv;
 const projectRoot = path.resolve(import.meta.dirname, "..");
@@ -11,8 +12,6 @@ const templateAgentsPath = path.join(projectRoot, "templates", "AGENTS.md");
 const templateAgentsPolicyPath = path.join(projectRoot, "templates", "AGENTS_POLICY.md");
 const templateAgentConfigsDir = path.join(projectRoot, "templates", "agents");
 const templateReferencesDir = path.join(projectRoot, "templates", "references");
-const managedConfigStart = "# codex-automate managed block start";
-const managedConfigEnd = "# codex-automate managed block end";
 
 function timestamp() {
   return new Date().toISOString().replace(/[:.]/g, "-");
@@ -20,6 +19,10 @@ function timestamp() {
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
+}
+
+function normalizeConfigPath(filePath) {
+  return filePath.replaceAll(path.sep, "/");
 }
 
 function backupFile(targetPath) {
@@ -94,65 +97,36 @@ function installReferenceFile(name) {
   return { targetPath, backupPath };
 }
 
-function buildManagedConfigBlock() {
-  return [
-    managedConfigStart,
-    "[features]",
-    "multi_agent = true",
-    "",
-    "[agents]",
-    "max_threads = 6",
-    "max_depth = 1",
-    "",
-    '[agents.explorer]',
-    'description = "Codebase exploration and structure understanding for planning."',
-    'config_file = "~/.codex/agents/explorer.toml"',
-    "",
-    '[agents.explorer_deep]',
-    'description = "Deep architectural exploration and system-level structure analysis."',
-    'config_file = "~/.codex/agents/explorer_deep.toml"',
-    "",
-    '[agents.worker]',
-    'description = "Focused code writing and modification agent for direct implementation work."',
-    'config_file = "~/.codex/agents/worker.toml"',
-    "",
-    '[agents.worker_high]',
-    'description = "Complex implementation agent for architecture-sensitive or high-risk changes."',
-    'config_file = "~/.codex/agents/worker_high.toml"',
-    "",
-    '[agents.angel]',
-    'description = "Idea expansion agent for reframing assumptions and exploring new possibilities. Aliases: angel, 엔젤, 천사."',
-    'config_file = "~/.codex/agents/angel.toml"',
-    "",
-    '[agents.devil]',
-    'description = "Critical validation agent for pressure-testing plans, decisions, and hidden risks. Aliases: devil, 데빌, 악마."',
-    'config_file = "~/.codex/agents/devil.toml"',
-    managedConfigEnd
-  ].join("\n");
-}
-
-function updateConfigFile() {
+function updateConfigFile(agentConfigs) {
   const targetPath = path.join(codexHome, "config.toml");
-  const managedBlock = buildManagedConfigBlock();
   let backupPath = null;
-  let current = "";
+  let current = {};
 
   ensureDir(codexHome);
 
   if (fs.existsSync(targetPath)) {
-    current = fs.readFileSync(targetPath, "utf8");
+    const currentRaw = fs.readFileSync(targetPath, "utf8");
     backupPath = backupFile(targetPath);
+    current = currentRaw.trim() ? TOML.parse(currentRaw) : {};
   }
 
-  const escapedStart = managedConfigStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const escapedEnd = managedConfigEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const managedBlockRegex = new RegExp(`${escapedStart}[\\s\\S]*?${escapedEnd}\\n?`, "g");
-  const withoutManagedBlock = current.replace(managedBlockRegex, "").trimEnd();
-  const nextContent = withoutManagedBlock
-    ? `${withoutManagedBlock}\n\n${managedBlock}\n`
-    : `${managedBlock}\n`;
+  current.model_reasoning_effort = "high";
+  current.features ??= {};
+  current.features.multi_agent = true;
 
-  fs.writeFileSync(targetPath, nextContent);
+  current.agents ??= {};
+  current.agents.max_threads ??= 6;
+  current.agents.max_depth ??= 1;
+
+  for (const [name, config] of Object.entries(agentConfigs)) {
+    current.agents[name] = {
+      ...(current.agents[name] ?? {}),
+      description: config.description,
+      config_file: normalizeConfigPath(config.targetPath)
+    };
+  }
+
+  fs.writeFileSync(targetPath, `${TOML.stringify(current)}`);
 
   return { targetPath, backupPath };
 }
@@ -169,7 +143,32 @@ function runSetup() {
   const workerHighConfig = installAgentConfig("worker_high");
   const angelConfig = installAgentConfig("angel");
   const devilConfig = installAgentConfig("devil");
-  const configFile = updateConfigFile();
+  const configFile = updateConfigFile({
+    explorer: {
+      targetPath: explorerConfig.targetPath,
+      description: "Codebase exploration and structure understanding for planning."
+    },
+    explorer_deep: {
+      targetPath: explorerDeepConfig.targetPath,
+      description: "Deep architectural exploration and system-level structure analysis."
+    },
+    worker: {
+      targetPath: workerConfig.targetPath,
+      description: "Focused code writing and modification agent for direct implementation work."
+    },
+    worker_high: {
+      targetPath: workerHighConfig.targetPath,
+      description: "Complex implementation agent for architecture-sensitive or high-risk changes."
+    },
+    angel: {
+      targetPath: angelConfig.targetPath,
+      description: "Idea expansion agent for reframing assumptions and exploring new possibilities. Aliases: angel, 엔젤, 천사."
+    },
+    devil: {
+      targetPath: devilConfig.targetPath,
+      description: "Critical validation agent for pressure-testing plans, decisions, and hidden risks. Aliases: devil, 데빌, 악마."
+    }
+  });
   const lines = [
     "Installed global Codex setup.",
     "",
@@ -242,7 +241,7 @@ function runSetup() {
 
   if (configFile.backupPath) {
     lines.push(`- Backup: ${configFile.backupPath}`);
-    lines.push("- Existing config.toml was backed up before updating the managed block.");
+    lines.push("- Existing config.toml was backed up before TOML merge updates.");
   }
 
   return lines.join("\n");

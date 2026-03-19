@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+- replaced string-based `config.toml` managed block updates with TOML-based merge updates
+- changed installed agent `config_file` entries to use resolved absolute paths for better Windows compatibility
+- updated setup behavior so existing Codex config is preserved while custom agent entries are refreshed
+
 ## 0.3.0
 
 - split deployed guidance into `AGENTS.md`, `AGENTS_POLICY.md`, and `references/` documents
