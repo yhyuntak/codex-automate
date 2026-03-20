@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.0
+
+- updated global interaction guidance to require a fixed `사용자 의도 파악하기` section at the start of every response
+- changed that section to include both `질문의 성격` and `내 1차 판단` instead of a single ambiguous judgment field
+
 ## 0.9.0
 
 - added a bundled `docs` Codex skill template for document CRUD and index maintenance
