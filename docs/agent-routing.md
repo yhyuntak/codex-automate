@@ -1,3 +1,16 @@
+---
+title: Agent Routing Rules
+description: Routing guidance for exploration, implementation, and thought agents in the Codex harness.
+doc_type: reference
+scope:
+  - routing
+  - delegation
+  - agents
+covers:
+  - templates/agents/
+  - templates/skills/
+---
+
 # Agent Routing Rules
 
 ## Purpose
@@ -6,9 +19,10 @@ This document defines how work should be routed across the current Codex harness
 
 ## Core Routing Policy
 
-- Small and local lookups may be handled directly by the main agent when delegation would add unnecessary overhead.
+- Small and local lookups, straightforward edits, and narrow verification steps may be handled directly by the main agent when delegation overhead would add little value.
 - Use the `explorer` family for non-trivial exploration, relationship mapping, pattern discovery, or wider codebase understanding.
-- Code writing, code editing, file creation, and any file-writing task should use the `worker` family by default.
+- Use the `worker` family for direct implementation work, isolated write scopes, or edits that are broader, parallelizable, or otherwise better separated from the main caller.
+- Use `worker_high` when the change is architecture-sensitive, security-sensitive, performance-sensitive, multi-file, or otherwise high risk.
 - Non-implementation agents should remain `read-only` by default.
 
 ## Exploration Routing
@@ -18,7 +32,7 @@ Use `explorer` for:
 - normal codebase exploration
 - finding relevant files
 - mapping local relationships
-- identifying patterns before implementation
+- identifying patterns before implementation when focused exploration would help
 
 Use `explorer_deep` for:
 
@@ -31,10 +45,10 @@ Use `explorer_deep` for:
 
 Use `worker` for:
 
-- normal implementation work
-- focused file edits
-- straightforward code changes
-- standard verification-driven edits
+- normal implementation work when direct handling is not the better option
+- focused file edits that are broader or better separated
+- straightforward code changes that benefit from isolation
+- standard verification-driven edits when the task is better split out
 
 Use `worker_high` for:
 

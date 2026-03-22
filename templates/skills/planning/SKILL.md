@@ -29,7 +29,7 @@ Rules:
 
 - Ask one concise question at a time
 - Do not ask for facts that can be discovered from the repo
-- Use the `explorer` agent first for codebase facts
+- Use the `explorer` agent when codebase facts are not already available from the repo
 - Keep asking until the request is specific enough to plan
 
 ### Step 3: Reading Brain
@@ -42,7 +42,7 @@ Read `.codex/brain/index.md`.
 
 ### Step 4: Codebase Exploration
 
-Use the `explorer` agent to understand the relevant code structure, patterns, and dependency boundaries.
+Use the `explorer` agent when understanding the relevant code structure, patterns, and dependency boundaries would materially improve the plan.
 
 Collect:
 
@@ -107,7 +107,7 @@ Possible outcomes:
 
 Read `refs/plan-file.md`.
 
-Delegate plan file creation to the `worker` agent.
+Write the plan file directly when the change is small and the plan is already clear; otherwise delegate plan file creation to the `worker` agent.
 
 Write the plan file to:
 
@@ -142,6 +142,6 @@ If the user wants to save them, hand the selected content to the `save-para` ski
 
 - Planning is planning only. Do not implement.
 - Prefer repo discovery over unnecessary questioning.
-- Delegate codebase exploration to `explorer`.
-- Delegate plan file writing to `worker`.
+- Use `explorer` when focused codebase exploration would help.
+- Use `worker` for plan file writing when the file is large or better separated from planning.
 - Keep the user informed as the workflow advances.

@@ -31,7 +31,7 @@ If the operation type is unclear, confirm it before proceeding.
 
 ### Step 3: Explore docs Structure
 
-Use the `explorer` agent to understand:
+Use the `explorer` agent when it would help understand:
 
 - the current `docs/` folder layout
 - the current role of `docs/README.md`
@@ -42,7 +42,7 @@ For new documents, recommend one to three suitable locations based on existing s
 
 ### Step 4: Execute
 
-Delegate the file operation to `worker`.
+Handle small, local documentation edits directly when that is faster; delegate broader doc changes, new files, or index rebuilds to `worker`.
 
 Requirements by operation:
 
@@ -85,7 +85,7 @@ After create, edit, or delete:
 ## Constraints
 
 - Operate only on documentation under `docs/`
-- Delegate file modifications to `worker`
+- Use `worker` for broader document edits or any change that affects multiple docs at once
 - Maintain required metadata for important `docs/**/*.md` documents
 - Keep `docs/README.md` aligned with actual docs state
 

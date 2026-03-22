@@ -29,7 +29,7 @@ Execute the `Brain Update` section from the plan.
 Rules:
 
 - if the section is `none`, skip it
-- otherwise delegate the update to the `worker` agent
+- otherwise handle small, local brain updates directly when that is faster; delegate broader or multi-file updates to the `worker` agent
 - target files live under `.codex/brain/`
 - always keep `.codex/brain/index.md` in sync with new or updated brain files
 
@@ -46,9 +46,9 @@ Follow the implementation-order notation:
 
 #### AC with TC: TDD Loop
 
-1. delegate test writing to `worker`
+1. write tests directly when the change is small and local; otherwise delegate test writing to `worker`
 2. run the relevant tests and confirm an initial failing state when appropriate
-3. delegate implementation to `worker`
+3. implement directly when the change is small, local, and cheaper to do in place; otherwise delegate implementation to `worker`
 4. run the relevant tests again
 5. if tests pass, mark the AC complete
 6. if tests fail, retry using the retry policy
@@ -63,7 +63,7 @@ Follow the implementation-order notation:
 
 #### AC without TC
 
-1. delegate implementation to `worker`
+1. implement directly when the change is small, local, and cheaper to do in place; otherwise delegate implementation to `worker`
 2. mark the AC complete
 
 #### AC Checkbox Update
@@ -86,7 +86,7 @@ Preferred next steps:
 ## Constraints
 
 - Execute only what is in the plan
-- Delegate all file modifications to `worker` or `worker_high`
+- Use `worker` or `worker_high` for broader file modifications, especially when scopes are isolated or high risk
 - If a new AC is discovered, add it to the plan before continuing
 - Keep the user informed as execution advances
 

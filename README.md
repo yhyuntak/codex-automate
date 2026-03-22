@@ -41,7 +41,8 @@ This currently installs global Codex guidance into `~/.codex/` and bundled Codex
 
 - `~/.codex/AGENTS.md`
 - `~/.codex/AGENTS_POLICY.md`
-- `~/.codex/references/*.md`
+- `~/.codex/references/interaction.md`
+- `~/.codex/references/workflow.md`
 - `~/.codex/agents/*.toml`
 - `~/.codex/config.toml`
 - `~/.agents/skills/planning/**`
@@ -56,6 +57,9 @@ Behavior:
 - `config.toml` is merged through TOML parsing rather than replaced wholesale
 - Custom agent `config_file` paths are written as resolved absolute paths
 - Existing installed skill bundles are backed up before replacement
+- Delegation guidance now lives in `~/.codex/AGENTS.md` instead of a separate delegation reference
+- Small, local work is expected to stay direct unless delegation clearly helps
+- Response path references now prefer relative paths inside the workspace and absolute paths outside it
 - Documentation sync checks prioritize `docs/**/*.md` plus root `AGENTS.md`
 
 ## Publishing Status

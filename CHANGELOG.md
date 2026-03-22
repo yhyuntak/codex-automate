@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.0
+
+- removed the standalone delegation reference from `setup` and consolidated delegation guidance into `AGENTS.md`
+- relaxed skill-level delegation guidance so small, local work can stay direct when that is cheaper than routing through a subagent
+- updated installed response-format guidance so workspace paths are shown relatively and out-of-workspace paths absolutely
+- added frontmatter metadata to the documented agent routing reference under `docs/`
+
 ## 0.10.0
 
 - updated global interaction guidance to require a fixed `사용자 의도 파악하기` section at the start of every response

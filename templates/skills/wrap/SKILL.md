@@ -17,7 +17,7 @@ If one exists:
 
 - confirm whether all ACs are checked
 - if incomplete ACs remain, warn the user and ask whether to continue anyway
-- after confirmation, delegate plan-file status updates to `worker`
+- after confirmation, update the plan-file status directly when it is a small local edit; otherwise delegate to `worker`
 
 If none exist, skip this step.
 
@@ -31,7 +31,7 @@ If a matching backlog file exists and all ACs are complete:
 
 - move it to `docs/backlogs/done/`
 - update `docs/backlogs/README.md`
-- delegate file modifications to `worker`
+- handle small backlog edits directly when that is faster; otherwise delegate broader file modifications to `worker`
 
 If no related backlog exists, skip this step.
 
@@ -80,7 +80,7 @@ Primary documentation targets:
 If issues are found:
 
 - show the user the recommended updates
-- on confirmation, delegate edits to `worker`
+- on confirmation, handle small local edits directly or delegate broader edits to `worker`
 
 If the checker fails, warn and continue.
 
@@ -103,7 +103,7 @@ Possible outcomes:
 ## Constraints
 
 - Do not perform work not in the plan
-- Delegate file modifications to `worker` unless a stronger implementation agent is required
+- Use `worker` unless the edit is small, local, and cheaper to apply directly
 - Commit only after user confirmation
 - Skip missing targets without treating them as errors
 

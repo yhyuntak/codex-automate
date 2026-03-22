@@ -163,7 +163,6 @@ function runSetup() {
   const { targetPath, backupPath } = installAgentsFile();
   const agentsPolicy = installAgentsPolicyFile();
   const interactionRef = installReferenceFile("interaction.md");
-  const delegationRef = installReferenceFile("delegation.md");
   const workflowRef = installReferenceFile("workflow.md");
   const planningSkill = installSkillBundle("planning");
   const implementSkill = installSkillBundle("implement");
@@ -213,7 +212,6 @@ function runSetup() {
     `- Installed: ${targetPath}`,
     `- Installed: ${agentsPolicy.targetPath}`,
     `- Installed: ${interactionRef.targetPath}`,
-    `- Installed: ${delegationRef.targetPath}`,
     `- Installed: ${workflowRef.targetPath}`,
     `- Installed: ${planningSkill.targetPath}`,
     `- Installed: ${implementSkill.targetPath}`,
@@ -244,7 +242,6 @@ function runSetup() {
 
   for (const [label, result] of [
     ["interaction reference", interactionRef],
-    ["delegation reference", delegationRef],
     ["workflow reference", workflowRef]
   ]) {
     if (result.backupPath) {

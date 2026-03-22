@@ -49,6 +49,9 @@ The goal is to understand enough, change the right thing, and explain the result
 - Avoid ending every response with repetitive offer phrases unless a real next step needs to be chosen.
 - Avoid dumping file-by-file detail unless it materially helps the user.
 - If a response starts reading like a wall of text, compress it and surface the answer earlier.
+- When referencing files under the current workspace, prefer relative paths in plain text.
+- When referencing files outside the current workspace, use absolute paths in plain text.
+- Add line numbers only when the exact location materially helps.
 - When explaining a process, workflow, or dependency chain, prefer a compact ASCII flow diagram over a long paragraph.
 - Keep ASCII diagrams short and readable.
 
@@ -91,15 +94,13 @@ covers:
 - Treat regressions, broken behavior, and missing verification as important information.
 
 ## Delegation Rules
-- Small and local lookups may be handled directly by the main agent when delegation would add unnecessary overhead.
+- Small and local lookups, straightforward edits, and narrow verification steps may be handled directly by the main agent when delegation overhead would add little value.
 - Use the `explorer` family for non-trivial exploration, relationship mapping, pattern discovery, or wider codebase understanding.
-- Code writing, code editing, file creation, and any file-writing task should use the `worker` family by default.
-- Any task that creates, edits, or writes files must be delegated to `worker` or `worker_high`.
+- Use the `worker` family for direct implementation work, isolated write scopes, or edits that are broader, parallelizable, or otherwise better separated from the main caller.
+- Use `worker_high` when the change is architecture-sensitive, security-sensitive, performance-sensitive, multi-file, or otherwise high risk.
 - Non-implementation agents should stay read-only by default.
-- Use `explorer` for normal codebase exploration.
+- Use `explorer` for normal codebase exploration when focused exploration would help.
 - Escalate to `explorer_deep` when the task needs architectural understanding, complex dependency mapping, or system-level analysis.
-- Use `worker` for standard implementation tasks.
-- Escalate to `worker_high` when the change is architecture-sensitive, security-sensitive, performance-sensitive, multi-file, or otherwise high risk.
 - Route `angel`, `엔젤`, or `천사` to `angel` when idea expansion is needed.
 - Route `devil`, `데빌`, or `악마` to `devil` when critical validation or risk review is needed.
 
