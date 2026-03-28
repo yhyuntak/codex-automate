@@ -3,6 +3,16 @@
 This repository is the source for the `codex-automate` harness itself.
 It is not the installed global `~/.codex/AGENTS.md` file.
 
+## Terminology
+
+- When this project refers to the plugin, the installer, the install templates, the installed global guidance, or "the plugin's `AGENTS.md`", interpret that as the install-template side under `templates/`, especially `templates/AGENTS.md`, unless a different path is named explicitly.
+- When this project refers to the root, this project, this repo, or the local/workspace harness, interpret that as the workspace-local files for this repository, not the install templates and not the installed global files under `~/.codex/` or `~/.agents/`.
+- Examples:
+  - "root `AGENTS.md`" means `./AGENTS.md`
+  - "root skills" means project-local skills such as `./.codex/skills/...` when present
+  - "root agents" means project-local agent configs such as `./.codex/agents/...` when present
+- Treat the repository-root `AGENTS.md` as a contributor/workspace routing document for this repo itself, not as the file that gets installed into `~/.codex/`.
+
 ## Purpose
 
 - build and maintain the Codex harness installer

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0
+
+- changed installed response guidance so intent-check blocks are optional and visually separated instead of being mandatory at the start of every response
+- added installed English-practice guidance for meaningful corrections, single native-like replacements, and skipping trivial acknowledgements
+- added installed guidance for keeping intent-check, English correction, and the main answer in visibly separate sections, including optional HTML-style wrappers
+- added installed guidance for saving English learning notes in workspace-local `.codex/english-learning-log.md` with merge-on-duplicate behavior
+- clarified repository terminology so `templates/` refers to the install-template side and root/workspace references refer to this repository's local harness files
+
 ## 0.11.0
 
 - removed the standalone delegation reference from `setup` and consolidated delegation guidance into `AGENTS.md`
